@@ -19,7 +19,18 @@ class ImageProcessor:
         for key, value in methods.items():
             print(f"  - {key.capitalize()}: OpenCV code {value}")
 
-    def resize_image(self, fx, fy, method='linear'):
+    def resize_to_dimensions(self, width, height, method='linear'):
+        # this method changes to a specific dimension sya 40 by 40 to 80 by 80 these
+        # are to be specified in height and width
+        # so if u try to save this u will see new image only
+        """
+        Resize the image to a specific width and height.
+        
+        :param width: The desired width of the image.
+        :param height: The desired height of the image.
+        :param method: The interpolation method (default is 'linear').
+        """
+        print(f"Original dimensions: {self.get_dimensions()}")
         methods = {
             'linear': cv2.INTER_LINEAR,
             'nearest': cv2.INTER_NEAREST,
@@ -28,8 +39,39 @@ class ImageProcessor:
         if method not in methods:
             raise ValueError(f"Invalid method. Choose from {list(methods.keys())}.")
         
+    
+        self.img = cv2.resize(self.img, (width, height), interpolation=methods[method])
+        print(f"Resized image dimensions: {self.get_dimensions()}")
+        
+    
+
+    def resize_by_scale(self, fx, fy, method='linear'):
+        # it scales along the axis, so dimensions change
+        # example if fx=10,fy=10 then 500 by 500 will change to 5000 by 5000 when u display
+        # on saving it appears like it isnt resized but the factors are scaled
+        """
+        Resize the image by scaling factors (fx and fy).
+        
+        :param fx: The scaling factor for the width.
+        :param fy: The scaling factor for the height.
+        :param method: The interpolation method (default is 'linear').
+        """
+        print(f"Original dimensions: {self.get_dimensions()}")
+        methods = {
+            'linear': cv2.INTER_LINEAR,
+            'nearest': cv2.INTER_NEAREST,
+            'polynomial': cv2.INTER_CUBIC,
+        }
+        if method not in methods:
+            raise ValueError(f"Invalid method. Choose from {list(methods.keys())}.")
+        
+       
         self.img = cv2.resize(self.img, None, fx=fx, fy=fy, interpolation=methods[method])
         print(f"Resized image dimensions: {self.get_dimensions()}")
+        
+    
+
+        
 
     def blur_image(self, blur_type='box', ksize=(13, 13)):
         """
@@ -72,19 +114,18 @@ class ImageProcessor:
 
 if __name__ == '__main__':
     IMG_PATH = 'images/img.png'
-    processor = ImageProcessor(IMG_PATH)
+    # processor = ImageProcessor(IMG_PATH)
     # print(f"Original image dimensions: {processor.get_dimensions()}")
     # processor.resize_image(10, 10)
     # processor2=ImageProcessor(IMG_PATH)
     # processor2.resize_image(5,5,method='polynomial')
     # processor2.display_image()
     
-    processor.blur_image()
-    processor.display_image()
-    processor.save_image('edited_images/asdf.png')
+    # processor.blur_image()
+    # processor.display_image()
+    # processor.save_image('edited_images/asdf.png')
 
 
     processor = ImageProcessor(IMG_PATH)
     processor.resize_image(5,5)
-    processor.display_image()
-    processor.save_image('edited_images/changesize.png')
+    

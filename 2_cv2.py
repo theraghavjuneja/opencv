@@ -28,9 +28,10 @@ class ImageProcessor:
         if method not in methods:
             raise ValueError(f"Invalid method. Choose from {list(methods.keys())}.")
         
-        self.img = cv2.resize(self.img,fx=fx,fy=fy)
-        print(f"Resized image dimensions: {self.get_dimensions()}") 
-    def blur_image(self, blur_type='box', ksize=(5, 5)):
+        self.img = cv2.resize(self.img, None, fx=fx, fy=fy, interpolation=methods[method])
+        print(f"Resized image dimensions: {self.get_dimensions()}")
+
+    def blur_image(self, blur_type='box', ksize=(13, 13)):
         """
         Blur the image using different techniques.
         
@@ -57,7 +58,7 @@ class ImageProcessor:
 
     def save_image(self, output_path):
         try:
-            # cv2.imshow('Image',self.img)
+            cv2.imshow('Image',self.img)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
             cv2.imwrite(output_path, self.img)
@@ -72,7 +73,18 @@ class ImageProcessor:
 if __name__ == '__main__':
     IMG_PATH = 'images/img.png'
     processor = ImageProcessor(IMG_PATH)
-    print(f"Original image dimensions: {processor.get_dimensions()}")
-    processor.resize_image(10, 10)
+    # print(f"Original image dimensions: {processor.get_dimensions()}")
+    # processor.resize_image(10, 10)
+    # processor2=ImageProcessor(IMG_PATH)
+    # processor2.resize_image(5,5,method='polynomial')
+    # processor2.display_image()
     
+    processor.blur_image()
+    processor.display_image()
     processor.save_image('edited_images/asdf.png')
+
+
+    processor = ImageProcessor(IMG_PATH)
+    processor.resize_image(5,5)
+    processor.display_image()
+    processor.save_image('edited_images/changesize.png')

@@ -183,7 +183,7 @@ if __name__ == '__main__':
     reflected_canvas_vertical = canvas.reflect('vertical')
     cv2.imshow("Reflected Canvas (Vertical)", reflected_canvas_vertical)
     
-    sheared_canvas = canvas.shear(0.5, 0.2)  # Example shear factors
+    sheared_canvas = canvas.shear(0.5, 0.2)  
     cv2.imshow("Sheared Canvas", sheared_canvas)
     # translated_canvas = canvas.translate(100, 100)
     # cv2.imshow("Translated Canvas", translated_canvas)

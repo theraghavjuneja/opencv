@@ -64,7 +64,7 @@ class ImageProcessor:
 
 if __name__ == "__main__":
 
-    image_path = "input_image.jpg"  
+    image_path = "images/img.png"  
     processor = ImageProcessor(image_path)
 
 
